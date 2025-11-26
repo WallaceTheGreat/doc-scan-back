@@ -1,21 +1,22 @@
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+    # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
-  get "up" => "rails/health#show", as: :rails_health_check
+    # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
+    # Can be used by load balancers and uptime monitors to verify that the app is live.
+    get "up" => "rails/health#show", as: :rails_health_check
 
-   namespace :api do
-    namespace :v1 do
-      resources :users, only: [:index]
-      resources :documents, only: [:index] do
-        collection do
-          get 'search'
+    namespace :api do
+        namespace :v1 do
+            resources :users, only: [:index]
+            resources :documents, only: [:index, :create, :update, :destroy] do
+                collection do
+                    get 'search'
+                    post :upload
+                end
+            end
+
+            resources :categories, only: [:index]
+            resources :documents_categories, only: [:index]
         end
-      end
-
-      resources :categories, only: [:index]
-      resources :documents_categories, only: [:index]
     end
-  end
 end
