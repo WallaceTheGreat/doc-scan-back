@@ -39,7 +39,7 @@ class Api::V1::DocumentsController < ApplicationController
         end
 
         uploaded = params[:file]
-        filename = "#{SecureRandom.uuid}#{File.extname(uploaded.original_filename)}"
+        filename = uploaded.original_filename
         save_path = Rails.root.join("public", "uploads", filename)
 
         FileUtils.mkdir_p(File.dirname(save_path))
@@ -52,7 +52,7 @@ class Api::V1::DocumentsController < ApplicationController
     private
 
     def document_params
-        params.require(:document).permit(:title, :created_by)
+        params.require(:document).permit(:title, :created_by, :path)
     end
 
 end
