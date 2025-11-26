@@ -7,8 +7,12 @@ Rails.application.routes.draw do
 
    namespace :api do
     namespace :v1 do
+      # Authentication routes
+      post '/auth/login', to: 'authentication#login'
+      post '/auth/register', to: 'authentication#register'
+
       resources :users, only: [:index]
-      resources :documents, only: [:index] do
+      resources :documents, only: [:index, :show, :update, :destroy] do
         collection do
           get 'search'
         end
